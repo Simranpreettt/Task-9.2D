@@ -1,0 +1,68 @@
+/* General container styles for the pricing plans page */
+.pricing-plans-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f8f9fa;
+  }
+  
+  .pricing-plans-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    color: #333;
+  }
+  
+  /* Styles for each individual pricing plan box */
+  .plan-box {
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .plan-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  
+  .plan-box p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .plan-box button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .plan-box button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive layout for smaller screens */
+  @media (max-width: 768px) {
+    .pricing-plans-container {
+      flex-direction: column;
+    }
+  
+    .plan-box {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+  

@@ -1,0 +1,73 @@
+/* General container for the payment page */
+.payment-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 40px;
+    background-color: #f8f9fa;
+  }
+  
+  .payment-page-container h2 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .payment-box {
+    width: 400px;
+    padding: 20px;
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #28a745;
+  }
+  
+  .payment-box .StripeElement {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f1f1f1;
+  }
+  
+  .payment-box button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.2rem;
+    color: #ffffff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .payment-box button:hover {
+    background-color: #218838;
+  }
+  
+  /* Responsive layout for the payment page */
+  @media (max-width: 768px) {
+    .payment-box {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+
+  .thank-you-message {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #28a745;  /* Green color to signify success */
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  
