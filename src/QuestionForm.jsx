@@ -1,31 +1,35 @@
-// src/components/QuestionForm.js
 import React, { useState } from 'react';
 import { Form, TextArea, Button } from 'semantic-ui-react';
-import { db } from './firebase'; // Ensure this path is correct
-import { collection, addDoc } from 'firebase/firestore'; // Import necessary Firestore functions
+import { db } from './firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { Controlled as CodeMirror } from 'react-codemirror2';
+import ReactMarkdown from 'react-markdown';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript'; 
 import './QuestionForm.css';
 
 function QuestionForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [tags, setTags] = useState('');
+  const [code, setCode] = useState(''); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Use the new Firestore syntax to add a document
-      const docRef = await addDoc(collection(db, 'questions'), {  // Correctly use collection
-        title: title,
-        description: description,
-        tags: tags,
+      const docRef = await addDoc(collection(db, 'questions'), {
+        title,
+        description,
+        tags,
+        code,
         createdAt: new Date(),
       });
 
       console.log("Document written with ID: ", docRef.id);
-      // Clear the form fields after submission
-      setTitle("");
-      setDescription("");
-      setTags("");
+      setTitle('');
+      setDescription('');
+      setTags('');
+      setCode('');
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -57,7 +61,26 @@ function QuestionForm() {
           onChange={(e) => setTags(e.target.value)}
         />
       </Form.Field>
+
+      <Form.Field>
+        <label>Code</label>
+        <CodeMirror
+          value={code}
+          options={{
+            mode: 'javascript', 
+            theme: 'default',
+            lineNumbers: true,
+          }}
+          onBeforeChange={(editor, data, value) => {
+            setCode(value);
+          }}
+        />
+      </Form.Field>
+
       <Button type="submit">Post</Button>
+
+      <h3>Markdown Preview:</h3>
+      <ReactMarkdown>{`${description}\n\n\`\`\`javascript\n${code}\n\`\`\``}</ReactMarkdown> 
     </Form>
   );
 }
