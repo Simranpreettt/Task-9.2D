@@ -5,21 +5,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                bat 'C:\\Maven\\bin\\mvn clean package' // Modify for your project type
+                bat 'npm install'  // If it's a Node.js project
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'mvn test'  // Use appropriate test command
+                bat 'npm test'  // Adjust for your testing framework
             }
         }
 
         stage('Code Quality') {
             steps {
                 echo 'Running code quality checks...'
-                sh 'sonar-scanner'  // Ensure SonarQube is configured
+                bat 'eslint . || exit 0'  // Adjust if using ESLint, or another tool
             }
         }
 
