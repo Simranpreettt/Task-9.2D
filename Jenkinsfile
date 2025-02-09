@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                bat 'mvn clean package'  // Modify for your project type
+                bat 'C:\\Maven\\bin\\mvn clean package' // Modify for your project type
             }
         }
 
