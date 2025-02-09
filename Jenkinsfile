@@ -12,35 +12,35 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test --passWithNoTests'  // Adjust for your testing framework
+                bat 'npm test --passWithNoTests --watchAll=false'  // Adjust for your testing framework
             }
         }
 
         stage('Code Quality') {
             steps {
                 echo 'Running code quality checks...'
-                bat 'eslint . || exit 0'  // Adjust if using ESLint, or another tool
+                bat 'eslint . || true'  // Allow ESLint warnings without failing the pipeline
             }
         }
 
         stage('Deploy to Test') {
             steps {
                 echo 'Deploying to test environment...'
-                bat './deploy.sh test'  // Modify for Docker/AWS/K8s
+                sh './deploy.sh test'  // Ensure deploy.sh is executable
             }
         }
 
         stage('Release to Production') {
             steps {
                 echo 'Releasing to production...'
-                bat './deploy.sh prod'  // Modify for your release process
+                sh './deploy.sh prod'  // Ensure deploy.sh is executable
             }
         }
 
         stage('Monitoring & Alerts') {
             steps {
                 echo 'Setting up monitoring...'
-                bat 'curl -X POST http://monitoring-tool/api/alerts'  // Modify as needed
+                sh 'curl -X POST http://monitoring-tool/api/alerts || true'  // Ensure failure doesn’t stop pipeline
             }
         }
     }
