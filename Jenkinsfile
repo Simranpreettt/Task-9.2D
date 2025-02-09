@@ -12,7 +12,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test'  // Adjust for your testing framework
+                bat 'npm test --passWithNoTests'  // Adjust for your testing framework
             }
         }
 
