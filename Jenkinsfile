@@ -1,47 +1,45 @@
 pipeline {
     agent any
-
+    
+    environment {
+        NODEJS_VERSION = '18' // Change this based on your project requirements
+    }
+    
     stages {
         stage('Build') {
             steps {
-                echo 'Building the application...'
-                bat 'npm install'  // If it's a Node.js project
+                script {
+                    echo 'Installing dependencies...'
+                    sh 'npm install'
+                }
             }
         }
-
+        
         stage('Test') {
             steps {
-                echo 'Running tests...'
-                bat 'npm test --passWithNoTests --watchAll=false || exit 0'  // Adjust for your testing framework
+                script {
+                    echo 'Running tests...'
+                    sh 'npm test'
+                }
             }
         }
-
-        stage('Code Quality') {
+        
+        stage('Deploy') {
             steps {
-                echo 'Running code quality checks...'
-                bat 'eslint . || true'  // Allow ESLint warnings without failing the pipeline
+                script {
+                    echo 'Deploying application...'
+                    sh 'npm run deploy' // Modify based on your deployment command
+                }
             }
         }
-
-        stage('Deploy to Test') {
-            steps {
-                echo 'Deploying to test environment...'
-                sh './deploy.sh test'  // Ensure deploy.sh is executable
-            }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
         }
-
-        stage('Release to Production') {
-            steps {
-                echo 'Releasing to production...'
-                sh './deploy.sh prod'  // Ensure deploy.sh is executable
-            }
-        }
-
-        stage('Monitoring & Alerts') {
-            steps {
-                echo 'Setting up monitoring...'
-                sh 'curl -X POST http://monitoring-tool/api/alerts || true'  // Ensure failure doesn’t stop pipeline
-            }
+        failure {
+            echo 'Pipeline failed! Check logs for errors.'
         }
     }
 }
