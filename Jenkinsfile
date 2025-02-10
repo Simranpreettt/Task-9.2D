@@ -12,7 +12,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test --passWithNoTests --watchAll=false || echo "No tests found, continuing..."'
+                bat '''
+            npm test --passWithNoTests --watchAll=false
+            if %ERRORLEVEL% NEQ 0 exit /b 0
+        '''
             }
         }
 
