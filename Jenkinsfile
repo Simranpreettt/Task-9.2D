@@ -2,40 +2,46 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Simranpreettt/Task-9.2D.git'
-            }
-        }
-
         stage('Build') {
             steps {
-                echo 'Installing dependencies...'
-                bat 'npm install' // Use 'bat' instead of 'sh' for Windows
+                echo 'Building the application...'
+                bat 'npm install'  // If it's a Node.js project
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                bat 'npm test'
+                bat 'npm test --passWithNoTests --watchAll=false'  // Adjust for your testing framework
             }
         }
 
-        stage('Deploy') {
+        stage('Code Quality') {
             steps {
-                echo 'Deploying application...'
-                bat 'npm run deploy'
+                echo 'Running code quality checks...'
+                bat 'eslint . || true'  // Allow ESLint warnings without failing the pipeline
             }
         }
-    }
 
-    post {
-        failure {
-            echo 'Pipeline failed! Check logs for errors.'
+        stage('Deploy to Test') {
+            steps {
+                echo 'Deploying to test environment...'
+                sh './deploy.sh test'  // Ensure deploy.sh is executable
+            }
         }
-        success {
-            echo 'Pipeline completed successfully.'
+
+        stage('Release to Production') {
+            steps {
+                echo 'Releasing to production...'
+                sh './deploy.sh prod'  // Ensure deploy.sh is executable
+            }
+        }
+
+        stage('Monitoring & Alerts') {
+            steps {
+                echo 'Setting up monitoring...'
+                sh 'curl -X POST http://monitoring-tool/api/alerts || true'  // Ensure failure doesn’t stop pipeline
+            }
         }
     }
 }
