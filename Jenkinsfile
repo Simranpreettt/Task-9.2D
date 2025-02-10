@@ -1,45 +1,41 @@
 pipeline {
     agent any
-    
-    environment {
-        NODEJS_VERSION = '18' // Change this based on your project requirements
-    }
-    
+
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Simranpreettt/Task-9.2D.git'
+            }
+        }
+
         stage('Build') {
             steps {
-                script {
-                    echo 'Installing dependencies...'
-                    sh 'npm install'
-                }
+                echo 'Installing dependencies...'
+                bat 'npm install' // Use 'bat' instead of 'sh' for Windows
             }
         }
-        
+
         stage('Test') {
             steps {
-                script {
-                    echo 'Running tests...'
-                    sh 'npm test'
-                }
+                echo 'Running tests...'
+                bat 'npm test'
             }
         }
-        
+
         stage('Deploy') {
             steps {
-                script {
-                    echo 'Deploying application...'
-                    sh 'npm run deploy' // Modify based on your deployment command
-                }
+                echo 'Deploying application...'
+                bat 'npm run deploy'
             }
         }
     }
-    
+
     post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
         failure {
             echo 'Pipeline failed! Check logs for errors.'
+        }
+        success {
+            echo 'Pipeline completed successfully.'
         }
     }
 }
