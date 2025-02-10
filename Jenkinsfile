@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the application...'
-                bat 'npm install'  // If it's a Node.js project
+                bat 'npm install'
             }
         }
 
@@ -26,14 +26,14 @@ pipeline {
         stage('Deploy to Test') {
             steps {
                 echo 'Deploying to test environment...'
-                bat 'deploy.bat test'  // Use a batch script for deployment on Windows
+                bat 'deploy.bat test'  // Use a batch file for Windows
             }
         }
 
         stage('Release to Production') {
             steps {
                 echo 'Releasing to production...'
-                bat 'deploy.bat test'  // Use a batch script for deployment on Windows
+                bat 'deploy.bat prod'  // Use batch file or Git Bash
             }
         }
 
